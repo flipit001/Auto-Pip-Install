@@ -4,6 +4,7 @@ import re
 import ast
 import json
 import sys
+import glob
 
 PIP_SEARCH = re.compile(r"\<div\sclass\=\"[^\"]*\"\>pypi\.org\s[^\s]*\sproject\s[^\s]*\s([^\<]*)\<\/div\>")
 
@@ -55,6 +56,9 @@ if __name__ == "__main__":
         exit(1)
 
     with open(sys.argv[1], "r") as fh:
-        files = json.load(fh)
+        data = json.load(fh)
+
+    files = []
+    for file in data: files += glob.glob(file)
 
     install_dependencies_from_files(files)
