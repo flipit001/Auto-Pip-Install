@@ -17,7 +17,8 @@ Automatically install all needed dependencies from inputted python file(s).
 [
     "test.py",
     "test2.py",
-    "test3.py"
+    "test3.py",
+    "tests/*.py"
 ]
 > python3 auto_pip_install.py example.json
 ```
