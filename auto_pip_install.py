@@ -5,17 +5,12 @@ import ast
 import json
 import sys
 import glob
+import importlib.util
 
 PIP_SEARCH = re.compile(r"\<div\sclass\=\"[^\"]*\"\>pypi\.org\s[^\s]*\sproject\s[^\s]*\s([^\<]*)\<\/div\>")
 
 def have_dependency(dependency: str) -> bool:
-    try:
-        exec(f"import {dependency}")
-
-    except ImportError:
-        return False
-
-    return True
+    return importlib.util.find_spec(dependency) is not None
 
 def install_dependency(dependency: str) -> None:
     url = f"https://www.google.com/search?q={dependency}+pypi"
