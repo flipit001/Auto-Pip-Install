@@ -14,14 +14,11 @@ def have_dependency(dependency: str) -> bool:
 
 def install_dependency(dependency: str) -> None:
     url = f"https://www.google.com/search?q={dependency}+pypi"
-    try:
-        cmd = PIP_SEARCH.findall(requests.get(url).content.decode(errors="ignore"))[0]
-    
-    except IndexError:
-        print(f"failed to install dependency: {dependency}")
+    cmd = PIP_SEARCH.findall(requests.get(url).content.decode(errors="ignore"))
+    if not cmd:
         return
-
-    pip_command = subprocess.Popen(["pip3", "install", cmd], stdout=subprocess.PIPE)
+    
+    pip_command = subprocess.Popen(["pip3", "install", cmd[0]], stdout=subprocess.PIPE)
     pip_command.wait()
     print(f"Successfully installed dependency {dependency}")
 
